@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Profil Pelajar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg1: #0f172a;
+            --bg2: #1f2a44;
+            --card: #ffffff;
+            --accent: #06b6d4;
+            --accent-2: #7c3aed;
+            --muted: #6b7280;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg1), var(--bg2));
+            color: #0f2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 980px;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 28px;
+            align-items: start;
+        }
+
+        .hero {
+            color: white;
+            padding: 28px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            color: white;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: 34px;
+            margin: 6px 0 8px;
+            line-height: 1.05
+        }
+
+        p.lead {
+            color: rgba(255, 255, 255, 0.85);
+            margin: 0 0 18px
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.5);
+            color: var(--bg1);
+        }
+
+        form .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 6px
+        }
+
+        input[type=text],
+        input[type=email],
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e6edf3;
+            font-size: 14px
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        button.btn {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(124, 58, 237, 0.24);
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+
+        button.btn:active {
+            transform: translateY(1px)
+        }
+
+        button.ghost {
+            background: transparent;
+            border: 1px solid #e6edf3;
+            color: var(--muted);
+            font-weight: 600
+        }
+
+        .result {
+            margin-top: 14px;
+            padding: 14px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #f8fafc, #ffffff);
+            display: none;
+            position: relative;
+            overflow: hidden;
+            animation: cardIn .36s ease both;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .result h3 {
+            margin: 0 0 8px
+        }
+
+        .meta {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .check {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-left: auto
+        }
+
+        .small {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #111827;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(2, 6, 23, 0.6);
+            display: none
+        }
+
+        @media(max-width:880px) {
+            .page {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="hero">
+            <span class="badge">Sistem Profil</span>
+            <h1>Sistem Profil Pelajar — Gempak & Mudah</h1>
+            <p class="lead">Isi ringkas di sebelah kanan. Kami akan papar maklumat dengan gaya yang mudah difahami
+                semua.</p>
+            <div class="card" style="margin-top:18px;">
+                <strong>Tip:</strong> Sertakan nama penuh dan e-mel yang sah untuk hasil terbaik.
+            </div>
+        </div>
+
+        <div>
+            <div class="card">
+                <h2 style="margin:0 0 12px;">Borang Pelajar</h2>
+                <form id="profileForm" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="nama">Nama Pelajar</label>
+                        <input id="nama" type="text" placeholder="Contoh: Ahmad Bin Ali" required>
+                    </div>
+
+                    <div class="form-group" style="margin-top:10px">
+                        <label for="program">Program</label>
+                        <select id="program" required>
+                            <option value="">-- Pilih Program --</option>
+                            <option value="Multimedia">Multimedia</option>
+                            <option value="Rangkaian">Rangkaian</option>
+                            <option value="CADD">CADD</option>
+                            <option value="Perisian">Perisian</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-top:10px">
+                        <label for="email">E-mel</label>
+                        <input id="email" type="email" placeholder="nama@domain.com" required>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn" id="btnPapar" type="button">Papar Maklumat</button>
+                        <button class="ghost" id="btnClear" type="button">Kosongkan</button>
+                    </div>
+
+                    <div id="result" class="result" aria-live="polite">
+                        <div style="display:flex;align-items:center;gap:12px">
+                            <div>
+                                <h3>Maklumat Pelajar</h3>
+                                <p class="small"><strong>Nama:</strong> <span id="outNama"></span></p>
+                                <p class="small"><strong>Program:</strong> <span id="outProgram"></span></p>
+                                <p class="small"><strong>E-mel:</strong> <span id="outEmail"></span></p>
+                            </div>
+                            <div class="check" id="checkIcon">✓</div>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:10px">
+                            <button class="ghost" id="btnCopy" type="button">Salin E-mel</button>
+                            <button class="ghost" id="btnClose" type="button">Tutup</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Berjaya!</div>
+
+    <script>
+        const btnPapar = document.getElementById('btnPapar');
+        const btnClear = document.getElementById('btnClear');
+        const btnCopy = document.getElementById('btnCopy');
+        const btnClose = document.getElementById('btnClose');
+        const result = document.getElementById('result');
+        const toast = document.getElementById('toast');
+
+        function showToast(text = 'Berjaya!') {
+            toast.textContent = text;
+            toast.style.display = 'block';
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.style.display = 'none', 300) }, 1700);
+        }
+
+        function paparMaklumat() {
+            const nama = document.getElementById('nama').value.trim();
+            const program = document.getElementById('program').value;
+            const email = document.getElementById('email').value.trim();
+
+            if (!nama || !program || !email) {
+                alert('Sila lengkapkan semua medan.');
+                return;
+            }
+
+            document.getElementById('outNama').textContent = nama;
+            document.getElementById('outProgram').textContent = program;
+            document.getElementById('outEmail').textContent = email;
+
+            result.style.display = 'block';
+            // small check animation
+            const check = document.getElementById('checkIcon');
+            check.animate([{ transform: 'scale(.7)' }, { transform: 'scale(1.05)' }, { transform: 'scale(1)' }], { duration: 420, easing: 'cubic-bezier(.2,.9,.2,1)' });
+            showToast('Maklumat dipaparkan');
+        }
+
+        btnPapar.addEventListener('click', paparMaklumat);
+        btnClear.addEventListener('click', () => { document.getElementById('profileForm').reset(); result.style.display = 'none'; });
+        btnClose.addEventListener('click', () => { result.style.display = 'none' });
+        btnCopy.addEventListener('click', () => {
+            const email = document.getElementById('outEmail').textContent;
+            if (!email) return; navigator.clipboard?.writeText(email).then(() => showToast('E-mel disalin'));
+        });
+    </script>
+
+</body>
+
+</html>
